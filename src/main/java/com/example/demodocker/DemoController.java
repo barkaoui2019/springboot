@@ -97,9 +97,14 @@ public class DemoController {
 		try {
                                                 
 	     AssumeRoleRequest assumeRole = new AssumeRoleRequest().withRoleArn(roleARN).withRoleSessionName("AssumeRoleWithWebIdentity");
+	     System.out.println("assumeRole: " + assumeRole);
 
              AWSSecurityTokenService sts = AWSSecurityTokenServiceClientBuilder.standard().withRegion(awsRegion).build();
+	     System.out.println("sts: " + sts);
+			
+			
               Credentials credentials = sts.assumeRole(assumeRole).getCredentials();
+	     System.out.println("credentials: " + credentials);
 
              BasicSessionCredentials sessionCredentials = new BasicSessionCredentials(
                 credentials.getAccessKeyId(),
