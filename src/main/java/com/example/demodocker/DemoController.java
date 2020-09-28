@@ -95,50 +95,17 @@ public class DemoController {
                 String bucketName = "s3://meh-ocp-dev-project-a";
 		
 		try {
-            // Creating the STS client is part of your trusted code. It has
-            // the security credentials you use to obtain temporary security credentials.
-			
-            //AWSSecurityTokenService stsClient = AWSSecurityTokenServiceClientBuilder.standard()
-            //                                        .withCredentials(new ProfileCredentialsProvider())
-             //                                       .withRegion(clientRegion)
-             //                                       .build();
-	
-	    AWSSecurityTokenService stsClient = AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
-			
-	     System.out.println("stsClient: " + stsClient);
+                                                
+	     AssumeRoleRequest assumeRole = new AssumeRoleRequest().withRoleArn(roleARN).withRoleSessionName("AssumeRoleWithWebIdentity");
 
-            // Obtain credentials for the IAM role. Note that you cannot assume the role of an AWS root account;
-            // Amazon S3 will deny access. You must use credentials for an IAM user or an IAM role.
-            AssumeRoleRequest roleRequest = new AssumeRoleRequest()
-                                                    .withRoleArn(roleARN)
-                                                    .withRoleSessionName(roleSessionName);
-			
-	    System.out.println("roleRequest: " + roleRequest);
-			
-			
-            AssumeRoleResult roleResponse = stsClient.assumeRole(roleRequest);
-	    System.out.println("roleResponse: " + roleResponse);
-			
-	    Credentials credentials = stsClient.assumeRole(assumeRole).getCredentials();
-	   System.out.println("credential: " + credential);  
-			
-			
-	    BasicSessionCredentials sessionCredentials = new BasicSessionCredentials(
+             AWSSecurityTokenService sts = AWSSecurityTokenServiceClientBuilder.standard().withRegion(awsRegion).build();
+              Credentials credentials = sts.assumeRole(assumeRole).getCredentials();
+
+             BasicSessionCredentials sessionCredentials = new BasicSessionCredentials(
                 credentials.getAccessKeyId(),
                 credentials.getSecretAccessKey(),
                 credentials.getSessionToken());
-			
-	   System.out.println("token: " + credentials.getSessionToken());  
-			
-			
-            //Credentials sessionCredentials = roleResponse.getCredentials();
-            //System.out.println("sessionCredentials: " + sessionCredentials);
-            
-            // Create a BasicSessionCredentials object that contains the credentials you just retrieved.
-            //BasicSessionCredentials awsCredentials = new BasicSessionCredentials(
-             //       sessionCredentials.getAccessKeyId(),
-             //       sessionCredentials.getSecretAccessKey(),
-             //       sessionCredentials.getSessionToken());
+	       
 			
 	    System.out.println("sessionCredentials: " + sessionCredentials.getSessionToken());
 
