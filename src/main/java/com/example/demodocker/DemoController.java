@@ -97,10 +97,13 @@ public class DemoController {
 		try {
             // Creating the STS client is part of your trusted code. It has
             // the security credentials you use to obtain temporary security credentials.
-            AWSSecurityTokenService stsClient = AWSSecurityTokenServiceClientBuilder.standard()
-                                                    .withCredentials(new ProfileCredentialsProvider())
-                                                    .withRegion(clientRegion)
-                                                    .build();
+			
+            //AWSSecurityTokenService stsClient = AWSSecurityTokenServiceClientBuilder.standard()
+            //                                        .withCredentials(new ProfileCredentialsProvider())
+             //                                       .withRegion(clientRegion)
+             //                                       .build();
+	
+	    AWSSecurityTokenService stsClient = AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
 			
 	     System.out.println("stsClient: " + stsClient);
 
