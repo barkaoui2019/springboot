@@ -89,7 +89,7 @@ public class DemoController {
 	public String iamrole() {
 		
 		System.out.println("start of iam role test");
-		String clientRegion = "us-east-1";
+		String awsRegion = "us-east-1";
                 String roleARN = "arn:aws:iam::530190180220:role/meh-ocp-dev-project-a-role";
                 String roleSessionName = "AssumeRoleWithWebIdentity";
                 String bucketName = "s3://meh-ocp-dev-project-a";
