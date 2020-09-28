@@ -101,20 +101,32 @@ public class DemoController {
                                                     .withCredentials(new ProfileCredentialsProvider())
                                                     .withRegion(clientRegion)
                                                     .build();
+			
+	     System.out.println("stsClient" + stsClient);
 
             // Obtain credentials for the IAM role. Note that you cannot assume the role of an AWS root account;
             // Amazon S3 will deny access. You must use credentials for an IAM user or an IAM role.
             AssumeRoleRequest roleRequest = new AssumeRoleRequest()
                                                     .withRoleArn(roleARN)
                                                     .withRoleSessionName(roleSessionName);
+			
+	    System.out.println("roleRequest" + roleRequest);
+			
+			
             AssumeRoleResult roleResponse = stsClient.assumeRole(roleRequest);
+	    System.out.println("roleResponse" + roleResponse);
+			
+			
             Credentials sessionCredentials = roleResponse.getCredentials();
+            System.out.println("sessionCredentials" + sessionCredentials);
             
             // Create a BasicSessionCredentials object that contains the credentials you just retrieved.
             BasicSessionCredentials awsCredentials = new BasicSessionCredentials(
                     sessionCredentials.getAccessKeyId(),
                     sessionCredentials.getSecretAccessKey(),
                     sessionCredentials.getSessionToken());
+			
+	    System.out.println("sessionCredentials" + sessionCredentials.getSessionToken());
 
             // Provide temporary security credentials so that the Amazon S3 client 
 	    // can send authenticated requests to Amazon S3. You create the client 
@@ -123,6 +135,7 @@ public class DemoController {
                                     .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
                                     .withRegion(clientRegion)
                                     .build();
+	   System.out.println("s3Client" + s3Client);
 
             // Verify that assuming the role worked and the permissions are set correctly
             // by getting a set of object keys from the bucket.
