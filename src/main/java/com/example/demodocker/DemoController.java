@@ -86,7 +86,7 @@ public class DemoController {
 	}
 	
 	@GetMapping("/iamrole")
-	public String greetingHello() {
+	public String iamrole() {
 		
 		System.out.println("start of iam role test");
 		String clientRegion = "us-east-1";
