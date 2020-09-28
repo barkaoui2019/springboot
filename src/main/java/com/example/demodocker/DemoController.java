@@ -119,25 +119,36 @@ public class DemoController {
             AssumeRoleResult roleResponse = stsClient.assumeRole(roleRequest);
 	    System.out.println("roleResponse: " + roleResponse);
 			
+	    Credentials credentials = stsClient.assumeRole(assumeRole).getCredentials();
+	   System.out.println("credential: " + credential);  
 			
-            Credentials sessionCredentials = roleResponse.getCredentials();
-            System.out.println("sessionCredentials: " + sessionCredentials);
+			
+	    BasicSessionCredentials sessionCredentials = new BasicSessionCredentials(
+                credentials.getAccessKeyId(),
+                credentials.getSecretAccessKey(),
+                credentials.getSessionToken());
+			
+	   System.out.println("token: " + credentials.getSessionToken());  
+			
+			
+            //Credentials sessionCredentials = roleResponse.getCredentials();
+            //System.out.println("sessionCredentials: " + sessionCredentials);
             
             // Create a BasicSessionCredentials object that contains the credentials you just retrieved.
-            BasicSessionCredentials awsCredentials = new BasicSessionCredentials(
-                    sessionCredentials.getAccessKeyId(),
-                    sessionCredentials.getSecretAccessKey(),
-                    sessionCredentials.getSessionToken());
+            //BasicSessionCredentials awsCredentials = new BasicSessionCredentials(
+             //       sessionCredentials.getAccessKeyId(),
+             //       sessionCredentials.getSecretAccessKey(),
+             //       sessionCredentials.getSessionToken());
 			
 	    System.out.println("sessionCredentials: " + sessionCredentials.getSessionToken());
 
             // Provide temporary security credentials so that the Amazon S3 client 
 	    // can send authenticated requests to Amazon S3. You create the client 
 	    // using the sessionCredentials object.
-            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                                    .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-                                    .withRegion(clientRegion)
-                                    .build();
+	    AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(awsRegion).withCredentials(new AWSStaticCredentialsProvider(sessionCredentials)).build();
+			
+			
+            
 	   System.out.println("s3Client: " + s3Client);
 
             // Verify that assuming the role worked and the permissions are set correctly
