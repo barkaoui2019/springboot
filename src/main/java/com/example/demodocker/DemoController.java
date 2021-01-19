@@ -155,7 +155,7 @@ public class DemoController {
                 " FileWriter and FileReader"; 
   
         // attach a file to FileWriter  
-        FileWriter fw=new FileWriter("/efs/test/output.txt"); 
+        FileWriter fw=new FileWriter("/var/output/output.txt"); 
   
         // read character wise from string and write  
         // into FileWriter  
