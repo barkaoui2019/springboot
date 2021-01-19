@@ -177,7 +177,7 @@ public class DemoController {
         FileReader fr=null; 
         try
         { 
-            fr = new FileReader("/efs/test/output.txt"); 
+            fr = new FileReader("/var/output/output.txt"); 
         } 
         catch (FileNotFoundException fe) 
         { 
@@ -219,7 +219,7 @@ public class DemoController {
         FileReader fr=null; 
         try
         { 
-            fr = new FileReader("/efs/test/output.txt"); 
+            fr = new FileReader("/var/output/output.txt"); 
         } 
         catch (FileNotFoundException fe) 
         { 
